@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.UserMapper">
+	 <resultMap type="com.shipu.model.User" id="userResultMap">
+		<id property="userId" column="user_id" />
+		<result property="phoneNum" column="phone_num" />
+		<result property="pwd" column="pwd" />
+		<result property="avatar" column="avatar" />
+		<result property="nickname" column="nickname" />
+		<result property="gender" column="gender" />
+		<result property="birthday" column="birthday" />
+		<result property="sessionId" column="session_id"/>
+	</resultMap>
+       	
+     <!-- 登录查询 --> 
+    <select id="login" parameterType="User" resultMap="userResultMap">
+        select * 
+        from tb_users
+        where phone_num = #{phoneNum} and pwd = #{pwd}
+    </select>
+    <!-- 查询所有用户 -->
+    <select id="selectAllUser" resultMap="userResultMap">
+      select * from tb_users
+    </select>
+    <!-- 查询 通过 id phone -->
+    <select id="getUserById" parameterType="Integer" resultMap="userResultMap">
+     select * 
+     from tb_users
+     where user_id = #{id}  
+    </select>
+    <select id="getUserByPhone" parameterType="String" resultMap="userResultMap">
+     select * 
+     from tb_users
+     where phone_num = #{_parameter}
+    </select>
+    <!-- 新增用户 -->
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+      insert into tb_users(phone_num,pwd)
+      values(#{phoneNum},#{pwd})
+    </insert>
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="Integer">
+      delete from tb_users where user_id = #{id}
+    </delete>
+    <!-- 更新属性值 -->
+    <update id="setPwd" parameterType="User">
+       update tb_users set pwd = #{pwd} where phone_num =#{phoneNum}
+    </update>
+    <update id="setAvatar" parameterType="User">
+       update tb_users set avatar = #{avatar} where phone_num =#{phoneNum}
+    </update>
+    <update id="setNickname" parameterType="User">
+       update tb_users set nickname = #{nickname} where phone_num =#{phoneNum}
+    </update>
+    <update id="setGender" parameterType="User">
+       update tb_users set gender = #{gender} where phone_num =#{phoneNum}
+    </update>
+    <update id="setBirthday" parameterType="User">
+       update tb_users set birthday = #{birthday} where phone_num =#{phoneNum}
+    </update>
+    <update id="setSessionId" parameterType="User">
+       update tb_users set session_id = #{sessionId} where phone_num =#{phoneNum}
+    </update>
+  </mapper>

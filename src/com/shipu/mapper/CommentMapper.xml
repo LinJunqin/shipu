@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.CommentMapper">
+	 <resultMap type="com.shipu.model.Comment" id="commentResultMap">
+		<id property="commentId" column="comment_id" />
+		<result property="userId" column="user_id" />
+		<result property="recipeId" column="recipe_id" />
+		<result property="content" column="content"/>
+		<result property="replyerId" column="replyer_id"/>
+		<result property="commentDate" column="comment_date"/>
+	</resultMap>
+	<insert id="addComment" parameterType="Comment">
+	  insert into tb_comments(user_id,recipe_id,content,replyer_id,comment_date)
+	  values(#{userId},#{recipeId},#{content},#{replyerId},#{commentDate})
+	</insert>
+	<delete id="deleteComment" parameterType="Comment">
+	 delete from tb_comments where comment_id = #{commentId}
+	</delete>
+	<select id="findCommentById" parameterType="Integer" resultMap="commentResultMap">
+	 select * 
+	 from tb_comments
+	 where recipe_id=#{recipeId}
+	 order by comment_date
+	 desc 
+	</select>
+</mapper>

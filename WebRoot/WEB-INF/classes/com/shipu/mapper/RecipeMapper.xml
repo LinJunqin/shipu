@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.RecipeMapper">
+	<resultMap type="com.shipu.model.Recipe" id="recipeResultMap">
+		<id property="recipeId" column="recipe_id" />
+		<result property="kind" column="kind" />
+		<result property="fodder" column="fodder" />
+		<result property="situation" column="situation" />
+		<result property="difficulty" column="difficulty" />
+		<result property="cookStep" column="cook_step" />
+		<result property="name" column="name" />
+		<result property="userId" column="user_id" />
+		<result property="foodPhotoPath" column="food_photo_path" />
+		<result property="notification" column="notification" />
+		<result property="cookVideoPath" column="cook_video_path" />
+		<result property="uploadDate" column="upload_date"/>
+		<result property="hotLevel" column="hot_level"/>
+	</resultMap>
+	 <insert id="addRecipe" parameterType="Recipe">
+	   insert into tb_recipes(kind,fodder,situation,difficulty,cook_step,name,user_id,food_photo_path,upload_date,hot_level)
+	   values(#{kind},#{fodder},#{situation},#{difficulty},#{cookStep},#{name},#{userId},#{foodPhotoPath},#{uploadDate},#{hotLevel})
+	 </insert>
+		<!-- 删除食谱 -->
+	<delete id="deleteRecipe" parameterType="Integer">
+	  delete from tb_recipes where recipe_id =#{id}	
+	</delete>
+	<select id="findRecipeById" parameterType="Integer" resultMap="recipeResultMap">
+	  select * 
+	  from tb_recipes
+	  where recipe_id = #{id}
+	</select>
+	<select id="findRecipeByFodder" parameterType="String" resultMap="recipeResultMap">
+	   select * 
+	   from tb_recipes
+	   where fodder like '%${_parameter}%'
+	</select>
+	<select id="findRecipeByKind" parameterType="String" resultMap="recipeResultMap">
+	 select *
+	 from tb_recipes
+	 where kind like '%${_parameter}%'
+	</select>
+	<select id="findRecipeBySituation" parameterType="String" resultMap="recipeResultMap">
+	select *
+	from tb_recipes
+	where situation like '%${_parameter}%'
+	</select>
+	<select id="findRecipeByDifficulty" parameterType="String" resultMap="recipeResultMap">
+	 select *
+	 from tb_recipes
+	 where difficulty like '%${_parameter}%' 
+	</select>
+	<select id="findRecipeByName" parameterType="String" resultMap="recipeResultMap">
+	 select *
+	 from tb_recipes
+	 where name like '%${_parameter}%'
+	</select>
+	<select id="findRecipeByHotLevel" resultMap="recipeResultMap">
+	 select * 
+	 from tb_recipes
+	 order by hot_level 
+	 desc limit 10
+	</select>
+	<select id="findRecipeByUploadDate" resultMap="recipeResultMap">
+	  select * 
+	  from tb_recipes
+	  order by upload_date
+	  desc limit 10
+	</select>
+	<update id="setFodder" parameterType="Recipe">
+	 update tb_recipes set fodder=#{fodder} where recipe_id=#{recipeId}
+	</update>
+	
+	<update id="setKind" parameterType="Recipe">
+	 update tb_recipes set kind=#{kind} where recipe_id=#{recipeId}
+	</update>
+	<update id="setSituation" parameterType="Recipe">
+	 update tb_recipes set situation=#{situation} where recipe_id=#{recipeId}
+	</update>
+	<update id="setDifficulty" parameterType="Recipe">
+	 update tb_recipes set difficulty=#{difficulty} where recipe_id=#{recipeId}
+	</update>
+	<update id="setCookStep" parameterType="Recipe">
+	 update tb_recipes set cook_step=#{cookStep} where recipe_id=#{recipeId}
+	</update>
+	<update id="setFoodPhotoPath" parameterType="Recipe">
+	 update tb_recipes set food_photo_path=#{foodPhotoPath} where recipe_id=#{recipeId}
+	</update>
+	<update id="setNotification" parameterType="Recipe">
+	 update tb_recipes set notification=#{notification} where recipe_id=#{recipeId}
+	</update>
+	<update id="setCookVideoPath" parameterType="Recipe">
+	 update tb_recipes set cook_video_path=#{cookVideoPath} where recipe_id=#{recipeId}
+	</update>
+	<update id="setHotLevel" parameterType="Recipe">
+	 update tb_recipes set hot_level =#{hotLevel} where recipe_id=#{recipeId} 
+	</update>
+</mapper>

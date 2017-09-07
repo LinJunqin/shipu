@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.TeachMapper">
+	 <resultMap type="com.shipu.model.Teach" id="teachResultMap">
+		<id property="teachId" column="teach_id" />
+		<result property="studentId" column="student_id" />
+		<result property="teacherId" column="teacher_id" />
+	</resultMap>
+	<insert id="addTeach" parameterType="Teach">
+	  insert into tb_teachs(student_id,teacher_id)
+	  values(#{studentId},#{teacherId})
+	</insert>
+	<delete id="deleteTeach" parameterType="Teach">
+	 delete from tb_teachs 
+	 where student_id=#{studentId} and teacher_id=#{teacherId}
+	</delete>
+	<select id="findStudentsById" parameterType="Integer" resultMap="teachResultMap">
+	  select * 
+	  from tb_teachs
+	  where teacher_id = #{teacherId}
+	</select>
+	<select id="findTeachById" parameterType="Teach" resultMap="teachResultMap">
+	 select * 
+	 from tb_teachs
+	 where student_id=#{studentId} and teacher_id=#{teacherId} or student_id=#{teacherId} and teacher_id=#{studentId}
+	</select>
+	<select id="findTeachersById" parameterType="Integer" resultMap="teachResultMap">
+	  select *
+	  from tb_teachs
+	  where student_id = #{studentId}
+	</select>
+	</mapper>

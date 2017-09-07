@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.LevelMapper">
+	 <resultMap type="com.shipu.model.Level" id="levelResultMap">
+		<id property="levelId" column="level_id" />
+		<result property="userId" column="user_id" />
+		<result property="sumLevel" column="sum_level"/>
+		<result property="studentLevel" column="student_level" />
+		<result property="teacherLevel" column="teacher_level"/>
+	</resultMap>
+	<insert id="addLevel" parameterType="Level">
+	 insert into tb_levels(user_id,student_level,teacher_level,sum_level)
+	 values(#{userId},#{studentLevel},#{teacherLevel},#{sumLevel}) 
+	</insert>
+	<delete id="deleteLevel" parameterType="Level">
+	 delete from tb_levels where user_id = #{userId}
+	</delete>
+	<select id="findLevelById" parameterType="Integer" resultMap="levelResultMap">
+	   select *
+	    from tb_levels
+	    where user_id=#{userId}
+	</select>
+	<update id="modifyStudentLevel" parameterType="Level"> 
+	  update tb_levels set student_level =#{studentLevel} where user_id = #{userId} 
+	</update>
+	<update id="modifyTeacherLevel" parameterType="Level">
+	  update tb_levels set teacher_level =#{teacherLevel} where user_id = #{userId}
+	</update>
+	<update id="modifySumLevel" parameterType="Level">
+	 update tb_levels set sum_level = #{sumLevel} where user_id = #{userId}
+	</update>
+	</mapper>

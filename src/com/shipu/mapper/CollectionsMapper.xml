@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.CollectionsMapper">
+	 <resultMap type="com.shipu.model.Collections" id="collectionsResultMap">
+		<id property="collectionId" column="collection_id" />
+		<result property="userId" column="user_id" />
+		<result property="recipeId" column="recipe_id" />
+	</resultMap>
+	<insert id="addCollection" parameterType="Collections">
+	 insert into tb_collections(user_id,recipe_id)
+	 value(#{userId},#{recipeId})
+	</insert>
+	<delete id="deleteCollection" parameterType="Collections">
+	 delete from tb_collections where user_id=#{userId} and recipe_id =#{recipeId}
+	</delete>
+	<select id="findAllCollectionById" parameterType="Integer" resultMap="collectionsResultMap">
+	 select * 
+	 from tb_collections
+	 where user_id=#{id}
+	</select>
+</mapper>

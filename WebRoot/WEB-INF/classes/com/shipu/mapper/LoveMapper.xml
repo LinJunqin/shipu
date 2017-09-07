@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shipu.mapper.LoveMapper">
+	 <resultMap type="com.shipu.model.Love" id="loveResultMap">
+		<id property="loveId" column="love_id" />
+		<result property="userId" column="user_id" />
+		<result property="recipeId" column="recipe_id" />
+	</resultMap>
+	<insert id="addLove" parameterType="Love">
+	 insert into tb_loves(user_id,recipe_id)
+	 values(#{userId},#{recipeId})
+	</insert>
+	<delete id="deleteLove" parameterType="Love">
+	  delete from tb_loves where user_id=#{userId} and recipe_id = #{recipeId}
+	</delete>
+	<select id="findAllRecipeById" parameterType="Integer" resultMap="loveResultMap">
+	  select * 
+	  from tb_loves
+	  where user_id =#{userId}
+	</select>
+	<select id="findAllLoveById" parameterType="Integer" resultMap="loveResultMap">
+	  select * 
+	  from tb_loves
+	  where recipe_id=#{recipeId}
+	</select>
+</mapper>
